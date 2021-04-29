@@ -25,7 +25,8 @@ class InventoryController extends Controller
      */
     public function list_product(inventory $inventory)
     {
-       
+        $product = inventory::all();
+        return $product;
     }
     
 
