@@ -18,14 +18,16 @@ class InventoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display the specified resource.
      *
+     * @param  \App\Models\inventory  $inventory
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function list_product(inventory $inventory)
     {
-        //
+       
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -33,32 +35,12 @@ class InventoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function create_product(Request $request)
     {
-        //
+        
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\inventory  $inventory
-     * @return \Illuminate\Http\Response
-     */
-    public function show(inventory $inventory)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\inventory  $inventory
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(inventory $inventory)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -67,7 +49,7 @@ class InventoryController extends Controller
      * @param  \App\Models\inventory  $inventory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, inventory $inventory)
+    public function update_product(Request $request, inventory $inventory)
     {
         //
     }
@@ -78,7 +60,7 @@ class InventoryController extends Controller
      * @param  \App\Models\inventory  $inventory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(inventory $inventory)
+    public function delete_product(inventory $inventory)
     {
         //
     }
