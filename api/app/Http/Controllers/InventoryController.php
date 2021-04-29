@@ -84,8 +84,16 @@ class InventoryController extends Controller
      * @param  \App\Models\inventory  $inventory
      * @return \Illuminate\Http\Response
      */
-    public function delete_product(inventory $inventory)
+    public function delete_product(Request $request)
     {
-        //
+        $product = inventory::find($request->id);
+        $product->delete();
+
+        //Profile updated, return success response
+        return response()->json([
+            'success' => true,
+            'message' => 'Product Successfully Deleted!',
+            'response' => $product
+        ], Response::HTTP_OK);
     }
 }
