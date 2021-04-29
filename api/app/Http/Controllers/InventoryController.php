@@ -60,9 +60,22 @@ class InventoryController extends Controller
      * @param  \App\Models\inventory  $inventory
      * @return \Illuminate\Http\Response
      */
-    public function update_product(Request $request, inventory $inventory)
+    public function update_product(Request $request)
     {
-        //
+        $user = inventory::findOrFail($request->id);
+
+        $product = $user->update([
+            'product_name' => $request->productName,
+            'quantity' => $request->quantity,
+            'amount' => $request->amount,
+         ]);
+ 
+         //Profile updated, return success response
+         return response()->json([
+             'success' => true,
+             'message' => 'Product updated successfully',
+             'response' => $product
+         ], Response::HTTP_OK);
     }
 
     /**
