@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\InventoryController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
+Route::get('listProduct', [InventoryController::class, 'list_product']);
+Route::post('createProduct', [InventoryController::class, 'create_product']);
+Route::put('updateProduct', [InventoryController::class, 'update_product']);
+Route::delete('deleteProduct', [InventoryController::class, 'delete_product']);
 
