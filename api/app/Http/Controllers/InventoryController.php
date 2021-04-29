@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\inventory;
 use Illuminate\Http\Request;
-
+use Symfony\Component\HttpFoundation\Response;
 class InventoryController extends Controller
 {
     /**
@@ -38,9 +38,19 @@ class InventoryController extends Controller
      */
     public function create_product(Request $request)
     {
-        
-    }
+        $product = inventory::create([
+            'product_name' => $request->productName,
+            'quantity' => $request->quantity,
+            'amount' => $request->amount,
+        ]);
 
+        return response()->json([
+            'success' => true,
+            'message' => 'Product Successfully Created',
+            'reponse' => $product
+        ], Response::HTTP_OK);
+
+    }
 
 
     /**
