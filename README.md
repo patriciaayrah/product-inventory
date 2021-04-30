@@ -17,7 +17,7 @@ Product Inventory
   DB_USERNAME=
   DB_PASSWORD=
 
-7. Migrate Databe table
+7. Migrate Database table
 - php artisan migrate or php artisan migrate:fresh --path=/database/migrations/2021_04_29_181741_create_inventories_table.php
 
 8. run the application by entering command in terminal
