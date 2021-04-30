@@ -51,25 +51,26 @@
         
         <!-- Modal body -->
         <div class="modal-body">
-            <input type="hidden" value="" id="productID"></input>
-            <div class="form-group">
-                <label for="name">Product Name:</label>
-                <input type="text" class="form-control" placeholder="Product Name" id="name">
-            </div>
-            <div class="form-group">
-                <label for="quantity">Quantity:</label>
-                <input type="number" class="form-control" placeholder="Enter Quantity" id="quantity">
-            </div>
-            <div class="form-group">
-                <label for="amount">Amount:</label>
-                <input type="number" class="form-control" placeholder="Enter Amount" id="amount">
-            </div>
-
+            <form id="productForm">
+                <input type="hidden" value="" id="productID"></input>
+                <div class="form-group">
+                    <label for="name">Product Name:</label>
+                    <input type="text" class="form-control" value="" placeholder="Product Name" id="name" name="productName">
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" class="form-control" value="" placeholder="Enter Quantity" id="quantity" name="quantity">
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount:</label>
+                    <input type="number" class="form-control" value="" placeholder="Enter Amount" id="amount" name="amount">
+                </div>
+            </form>
         </div>
         
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" id="buttonTitle">Save</button>
+          <button type="button" class="btn btn-success" id="buttonTitle" data-dismiss="modal">Save</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
         

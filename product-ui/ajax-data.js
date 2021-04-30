@@ -7,7 +7,7 @@ $(document).ready(function(){
 
         $("#modalTitle").html('Create Product');
         $("#buttonTitle").html('Create');
-
+        
     });
 
     $("#editProduct").click(function(){
@@ -17,9 +17,17 @@ $(document).ready(function(){
 
     });
 
+    $("#buttonTitle").click(function(){
+        var action = $(this).html();
+        if(action == "Create"){
+            
+            add_product();
+        }else if(action == "Update"){
+            update_product();
+        }
+    });
+
 });
-
-
 
 function get_product_list(){
     jQuery.ajax({
@@ -29,6 +37,30 @@ function get_product_list(){
             renderList(data);
         }
     });
+}
+
+function add_product(){
+
+     // setup some local variables
+     var $form = $("#productForm");
+
+    // Serialize the data in the form
+    var serializedData = $form.serialize();
+
+    jQuery.ajax({
+        type: 'POST',
+        url: 'http://127.0.0.1:8000/api/createProduct',
+        data: serializedData,
+        success:function(data){
+            get_product_list();
+            $('input').val('');
+            console.log('successfully added!');
+        }
+    });
+}
+
+function update_product(){
+
 }
 
 function renderList(data){
