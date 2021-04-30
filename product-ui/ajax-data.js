@@ -10,20 +10,12 @@ $(document).ready(function(){
         
     });
 
-    $("#editProduct").click(function(){
-
-        $("#modalTitle").html('Edit Product');
-        $("#buttonTitle").html('Update');
-
-    });
-
     $("#buttonTitle").click(function(){
         var action = $(this).html();
         if(action == "Create"){
-            
             add_product();
         }else if(action == "Update"){
-            update_product();
+            update_product($("#productID").val());
         }
     });
 
@@ -46,7 +38,7 @@ function get_product_list(){
 function add_product(){
 
      // setup some local variables
-     var $form = $("#productForm");
+    var $form = $("#productForm");
 
     // Serialize the data in the form
     var serializedData = $form.serialize();
@@ -63,7 +55,40 @@ function add_product(){
     });
 }
 
-function update_product(){
+function edit_product(id){
+
+        $("#modalTitle").html('Edit Product');
+        $("#buttonTitle").html('Update');
+        $("#productID").val(id);
+        $("#name").val($("#productName"+id+"").html());
+        $("#quantity").val($("#quantity"+id+"").html());
+        $("#amount").val($("#amount"+id+"").html());
+        
+}
+function update_product(id){
+
+    // $("#buttonTitle").val($("#productID"+id+"").html());
+    var productName = $("#name").val();
+    var quantity = $("#quantity").val();
+    var amount = $("#amount").val();
+    var id = $("#productID").val();
+
+    var dataUpdate = { 
+        'id'     : id,
+        'productName' : productName,
+        'quantity' : quantity,
+        'amount' : amount
+    }
+    jQuery.ajax({
+        type: 'PUT',
+        url: 'http://127.0.0.1:8000/api/updateProduct',
+        data: dataUpdate,
+        success:function(data){
+            get_product_list();
+            $('input').val('');
+            console.log('successfully Update!');
+        }
+    });
 
 }
 
@@ -88,12 +113,12 @@ function renderList(data){
     var list = "";
     $.each(data, function (i) {
        list +="<tr>";
-       list +="<td>"+data[i].id+"</td>";
-       list +="<td>"+data[i].product_name+"</td>";
-       list +="<td>"+data[i].quantity+"</td>";
-       list +="<td>"+data[i].amount+"</td>";
+       list +="<td id='productID"+data[i].id+"'>"+data[i].id+"</td>";
+       list +="<td id='productName"+data[i].id+"'>"+data[i].product_name+"</td>";
+       list +="<td id='quantity"+data[i].id+"'>"+data[i].quantity+"</td>";
+       list +="<td id='amount"+data[i].id+"'>"+data[i].amount+"</td>";
        list +="<td class='text-right'> ";
-       list +="<button type='button' class='btn btn-warning mr-1'  data-toggle='modal' data-target='#productModal' id='editProduct'>Edit</button>";
+       list +="<button type='button' class='btn btn-warning mr-1'  data-toggle='modal'  data-target='#productModal' id='editProduct' onclick='edit_product("+data[i].id+")')'>Edit</button>";
        list +="<button type='button' class='btn btn-danger' id='deleteProduct' onclick='delete_product("+data[i].id+")'>Delete</button>";
        list +="</td>";
        list +="</tr>";
