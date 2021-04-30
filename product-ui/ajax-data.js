@@ -1,6 +1,6 @@
 
 $(document).ready(function(){
-
+    $('.alert-danger').hide();
     get_product_list();
 
     $("#newProduct").click(function(){
@@ -48,9 +48,7 @@ function add_product(){
         url: 'http://127.0.0.1:8000/api/createProduct',
         data: serializedData,
         success:function(data){
-            get_product_list();
-            $('input').val('');
-            console.log('successfully added!');
+            return_success(data);
         }
     });
 }
@@ -84,9 +82,7 @@ function update_product(id){
         url: 'http://127.0.0.1:8000/api/updateProduct',
         data: dataUpdate,
         success:function(data){
-            get_product_list();
-            $('input').val('');
-            console.log('successfully Update!');
+            return_success(data);
         }
     });
 
@@ -128,5 +124,21 @@ function renderList(data){
 }   
 
 
-                            
-                            
+function return_success(data){
+    if(data.success == false){
+        var errorMsg = "";
+        if(data.errors != undefined){
+            $.each(data.errors, function (value, key) {
+                errorMsg +=  "#"+key+" ";
+            });
+        }else{
+            errorMsg +=  "#"+data.message+" ";
+        }
+        $('.alert-danger').addClass('d-block');
+        $('#errorMsg').html(errorMsg);
+    }else{
+        get_product_list();
+        $('input').val('');
+        $('.alert-danger').removeClass('d-block');
+    }
+}                  

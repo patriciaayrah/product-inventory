@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\inventory;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Validator;
 class InventoryController extends Controller
 {
     /**
@@ -38,6 +39,27 @@ class InventoryController extends Controller
      */
     public function create_product(Request $request)
     {
+
+        $payload = $request->only('productName', 'quantity', 'amount');
+
+        $validator = Validator::make($payload, [
+            'productName' => 'required|string',
+            'quantity' => 'numeric',
+            'amount' => 'numeric',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['message' => 'Validation Error','success' => false,'errors'=>$validator->errors()], Response::HTTP_OK);
+        }
+
+        if (inventory::where('product_name', '=', $request->get('productName'))->exists()) {
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Product Already Exist!',
+            ], Response::HTTP_OK);
+        }
+
         $product = inventory::create([
             'product_name' => $request->productName,
             'quantity' => $request->quantity,
@@ -62,6 +84,28 @@ class InventoryController extends Controller
      */
     public function update_product(Request $request)
     {
+
+        $payload = $request->only('productName', 'quantity', 'amount', 'id');
+
+        $validator = Validator::make($payload, [
+            'productName' => 'required|string',
+            'quantity' => 'numeric',
+            'amount' => 'numeric',
+            'id' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['message' => 'Validation Error','success' => false,'errors'=>$validator->errors()], Response::HTTP_OK);
+        }
+
+        if (inventory::where('product_name', '=', $request->get('productName'))->exists()) {
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Product Already Exist!',
+            ], Response::HTTP_OK);
+        }
+
         $user = inventory::findOrFail($request->id);
 
         $product = $user->update([
