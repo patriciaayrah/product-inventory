@@ -27,6 +27,10 @@ $(document).ready(function(){
         }
     });
 
+    $("#deleteProduct").click(function(){
+        delete_product($("deleteProduct").val());
+    });
+
 });
 
 function get_product_list(){
@@ -63,6 +67,22 @@ function update_product(){
 
 }
 
+function delete_product(id){
+
+    var dataDelete = { 
+        'id'     : id 
+    }
+    jQuery.ajax({
+        type: 'DELETE',
+        url: 'http://127.0.0.1:8000/api/deleteProduct',
+        data: dataDelete,
+        success:function(data){
+            get_product_list();
+            console.log('successfully Delete!');
+        }
+    });
+}
+
 function renderList(data){
     
     var list = "";
@@ -74,7 +94,7 @@ function renderList(data){
        list +="<td>"+data[i].amount+"</td>";
        list +="<td class='text-right'> ";
        list +="<button type='button' class='btn btn-warning mr-1'  data-toggle='modal' data-target='#productModal' id='editProduct'>Edit</button>";
-       list +="<button type='button' class='btn btn-danger' id='deleteProduct'>Delete</button>";
+       list +="<button type='button' class='btn btn-danger' id='deleteProduct' onclick='delete_product("+data[i].id+")'>Delete</button>";
        list +="</td>";
        list +="</tr>";
     });
